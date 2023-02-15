@@ -76,7 +76,27 @@ update_config_for_training(cfg)
 worker = build_worker(cfg)
 # print(worker.number_of_threads)
 
-from nuplan.planning.training.experiments.training import build_training_engine
+# from nuplan.planning.training.experiments.training import build_training_engine
 
-engine = build_training_engine(cfg, worker)
-print(type(engine.datamodule._train_set))
+# engine = build_training_engine(cfg, worker)
+# print(type(engine.datamodule._train_set))
+
+
+from nuplan.planning.script.builders.model_builder import build_torch_module_wrapper
+from nuplan.planning.script.builders.training_builder import build_lightning_datamodule
+
+
+torch_module_wrapper = build_torch_module_wrapper(cfg.model)
+# print(type(torch_module_wrapper))
+# feature_builders = torch_module_wrapper.get_list_of_required_feature()
+# target_builders = torch_module_wrapper.get_list_of_computed_target()
+# print(target_builders)
+
+datamodule = build_lightning_datamodule(cfg, worker, torch_module_wrapper)
+datamodule.setup(stage='fit')
+
+train_dataloader = datamodule.train_dataloader()
+print(type(train_dataloader))
+
+a = 
+print(next(iter(train_dataloader)))
