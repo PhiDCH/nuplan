@@ -1,0 +1,7 @@
+unzip nuplan-maps-v1.0.zip
+unzip nuplan-v1.1_mini.zip
+
+mv nuplan-maps-v1.0 dataset
+mkdir nuplan-v1.1
+mv nuplan-v1.1_mini/data/cache/mini/ nuplan-v1.1
+rm -rf nuplan-v1.1_mini
